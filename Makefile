@@ -1,7 +1,12 @@
-.PHONY: run
-run:
+.PHONY: search
+search:
 	@echo "Running..."
-	bash scripts/run.sh
+	bash scripts/search.sh
+
+.PHONY: seed
+seed:
+	@echo "Running..."
+	bash scripts/seed.sh
 
 .PHONY: setup
 setup:
