@@ -51,6 +51,21 @@ make serve
 This project *does not* depends on `dotenv-python`. Instead, using below script.
 > `set -a && source ./.env && set +a`
 
+## Functions
+
+### Register first Vectors
+
+```bash
+make seed
+```
+
+### Search similer vector
+
+```bash
+make search
+```
+
+
 ## Develop App
 On usual develop, first you activate `venv` first like below.
 
