@@ -1,13 +1,7 @@
-# preset-python-venv
+# learn-qdrant
+Qdrant の学習用。
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=686856069&skip_quickstart=true)
-
-Preset for development on Python using venv.
-
-**included:**
-- Lint and Format
-- Task runner
-- Env support
 
 ## Usage
 
@@ -19,20 +13,38 @@ depends on:
 support:
 - OS: M1 Macbook Air Ventura 13.4.1
 
-
 ## Gettig Started
 First of all, install VSCode recommended extensions. This includes Linter, Formatter, and so on. Recommendation settings is written on `.vscode/extensions.json`.
 
-Then, install dependencies:
+Make `venv`:
+
+```
+python -m venv .venv && . .venv/bin/activate
+```
+
+Install dependeincies:
+
+```
+pip install -r requirements.txt
+```
+
+Duplicate `.env` :
+
+```
+cp .env.sample .env
+echo '.env is created. please set env.'
+```
+
+Then, install Docker dependencies:
 
 ```bash
 make setup
 ```
 
-Now you can run script:
+Serve Qdrant:
 
 ```bash
-make run
+make serve
 ```
 
 > **Note**

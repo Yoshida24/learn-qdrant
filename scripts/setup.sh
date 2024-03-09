@@ -1,5 +1,5 @@
 #!/bin/bash
-python -m venv .venv && . .venv/bin/activate
-pip install -r requirements.txt
-cp .env.sample .env
-echo '.env is created. please set env.'
+docker pull qdrant/qdrant
+docker run -p 6333:6333 -p 6334:6334 \
+    -v $(pwd)/qdrant_storage:/qdrant/storage:z \
+    qdrant/qdrant
