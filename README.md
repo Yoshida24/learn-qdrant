@@ -65,6 +65,58 @@ make seed
 make search
 ```
 
+## Semantic Search
+自分で用意したドキュメントをメタデータ付きでQdrantに登録するには、`embedding.py` を参考に実装を行ってください。
+このリポジトリにはLangChainのドキュメント74ページ分のサンプルが付属しており、`embedding.py`によってそれをVectorDBに登録するテストを体験することができます。
+サンプルデータの登録を行うには、以下のコマンドを実行します。
+
+```bash
+python src/semantic_search/embedding.py
+```
+
+このサンプルデータに対してセマンティック検索をCLIで行うには、以下を実行してください。
+
+```bash
+python src/semantic_search/repl_semantic_search.py
+```
+
+以下のように対話的に検索を実行することができます。
+
+```
+=== 🤖セマンティック検索を開始します。 ===
+
+
+検索ワードを入力してください:
+🔍 SQL
+
+Your Query:
+    - SQL
+
+Search Result:
+
+    - 0th:
+        - score: 0.38316363
+        - id: 62
+        - title: query_checking
+        - url: https://python.langchain.com/docs/use_cases/sql/query_checking
+        - version: 74
+
+    - 1th:
+        - score: 0.37933916
+        - id: 58
+        - title: agents
+        - url: https://python.langchain.com/docs/use_cases/sql/agents
+        - version: 74
+
+もう一度検索する場合、検索ワードを入力してください:
+🔍
+```
+
+CLIではなくコードによって検索を実装したい場合、`search.py`の実装を参考にしてください。
+
+> **Note**
+> `repl_semantic_search.py` も内部的には `search.py` を利用しています。
+
 
 ## Develop App
 On usual develop, first you activate `venv` first like below.
