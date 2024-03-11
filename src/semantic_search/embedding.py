@@ -14,7 +14,7 @@ from typing import Any
 
 
 # ユーザー定義の変数
-target_docs_dir = "src/semantic_search/docs_src/langchain/**"
+target_docs_dir = "src/semantic_search/dataset/langchain/**"
 root_in_target_docs_dir = "langchain"
 qdrant_collection = "langchain-docs-semanticsearch-dev-0-2-0"
 
