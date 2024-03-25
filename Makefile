@@ -1,12 +1,8 @@
-.PHONY: search
-search:
-	@echo "Running..."
-	bash scripts/search.sh
-
-.PHONY: seed
-seed:
-	@echo "Running..."
-	bash scripts/seed.sh
+.PHONY: start
+start:
+	@echo "Starting..."
+	@echo "open docs: http://127.0.0.1:8000/docs"
+	uvicorn src.main:app --reload
 
 .PHONY: setup
 setup:

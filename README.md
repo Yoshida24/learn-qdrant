@@ -43,11 +43,27 @@ Then, install Docker dependencies:
 make setup
 ```
 
-Serve Qdrant:
+### Use
+
+Qdrant サーバを立ち上げます。
 
 ```bash
 make serve
 ```
+
+Qdrant ダッシュボードを開き（ http://localhost:6333/dashboard ）サンプルデータであるQdrantのドキュメントをインストールします。
+
+![img](docs/qdrant.png)
+
+APIサーバーを立ち上げます。
+
+```bash
+make start
+```
+
+これで API Server を使った検索の準備が整いました。
+ブラウザを開き、試しに「チャットボット　メモリ管理」を検索してみましょう。
+`http://127.0.0.1:8000/search/チャットボット　メモリ管理`
 
 > **Note**
 This project *does not* depends on `dotenv-python`. Instead, using below script.
@@ -88,7 +104,7 @@ python src/semantic_search/embedding.py
 以下を実行してください。
 
 ```bash
-python src/semantic_search/repl_semantic_search.py
+python src/cli/repl_semantic_search.py
 ```
 
 以下のように対話的に検索を実行することができます。
