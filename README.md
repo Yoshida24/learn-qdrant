@@ -97,7 +97,7 @@ make search
 サンプルデータの登録を行うには、以下のコマンドを実行します。
 
 ```bash
-python src/semantic_search/embedding.py
+python src/usecases/vectorize_article.py
 ```
 
 このサンプルデータに対してセマンティック検索を行えることを確認します。
