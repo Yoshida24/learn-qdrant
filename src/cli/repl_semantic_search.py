@@ -1,3 +1,12 @@
+import os
+import sys
+
+
+# 新しいパスを追加します。ここでは、現在のディレクトリの 'src' フォルダを追加します。
+new_path = os.path.join(os.getcwd())
+if new_path not in sys.path:
+    sys.path.append(new_path)
+
 from src.usecases.search import search
 
 
@@ -22,11 +31,9 @@ def main():
         for i, article in enumerate(response):
             print(
                 f"""    - {i}th:
-        - 記事タイトル: {article.payload["title"]}
-        - 記事URL: {article.payload["url"]}
+        - メタデータ: {article.payload}
         - 類似度スコア(dot product): {article.score}
         - 記事ID: {article.id}
-        - バージョン: {article.version}
 """
             )
         query = input(
