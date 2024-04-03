@@ -1,3 +1,19 @@
+"""
+埋め込みベクトル付きcsvデータをQdrantにinsertするプログラムです。
+
+ロードできるcsvの形式:
+以下の属性を含む
+- （必須）idとして使う属性(collection内で一意)
+- （必須）埋め込みベクトルの属性("[-0.007615094, 0.013458884]" の形式)
+- （任意）メタデータとして埋め込みたい属性
+
+サンプルcsvデータ:
+```
+data_use_as_id,foo,bar,embeddings_text
+https://example.com/unique/string,content title,content body,"[-0.007615094, 0.013458884]"
+```
+"""
+
 import pandas as pd
 from dataclasses import dataclass, asdict
 
@@ -6,11 +22,12 @@ from qdrant_client.http.models import Distance, VectorParams
 from qdrant_client.http.models import PointStruct
 
 from typing import Any
+embeddings_attr = "embeddings_text"
 
 
 @dataclass
 class QdrantPayload:
-    id: int
+    id: int | str
     vector: list[float]
     payload: dict[str, Any]
 
@@ -23,13 +40,7 @@ qdrant_collection = "foo-dev-0-2-0"
 # CSVデータを読み込む
 def csv_to_list(file_path: str):
     df = pd.read_csv(file_path)
-    datam = []
-    for index, row in df.iterrows():
-        data = {
-            "content": row["text"],
-            "embeddings_text": row["embeddings_text"],
-        }
-        datam.append(data)
+    datam = [row.to_dict() for index, row in df.iterrows()]
     return datam
 
 
@@ -38,32 +49,27 @@ def create_qdrant_payload(rows: list[dict]):
     qdrant_payloads: list = []
     for i, row in enumerate(rows):
         try:
-            if row["content"] is None:
-                raise Exception("None is detected")
             embeddings_text: list[float] = [
                 float(num)
-                for num in row["embeddings_text"]
+                for num in row[embeddings_attr]
                 .strip("[")
                 .strip("]")
                 .strip(" ")
                 .split(",")
             ]
-            print(len(embeddings_text))
             # 全部3072次元かを調べる
             if len(embeddings_text) != 3072:
-                print("not 3072 dimension")
-                raise Exception("not 3072 dimension")
+                raise Exception("{i} is not 3072 dimension")
 
+            # Extract attributes other than embeddings_text from the csv and convert them to a dictionary array, parsing the values as strings
             qdrant_payloads.append(
                 QdrantPayload(
                     id=i,
                     vector=embeddings_text,
                     payload={
-                        "content": (
-                            str(row["content"])
-                            if "content" in row and row["content"] != ""
-                            else ""
-                        ),
+                        attr: str(row[attr]) if attr in row and row[attr] != "" else ""
+                        for attr in row.keys()
+                        if attr != embeddings_attr
                     },
                 )
             )

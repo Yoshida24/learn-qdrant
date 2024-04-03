@@ -14,6 +14,11 @@ serve:
 	@echo "Serving..."
 	sh scripts/serve.sh
 
+.PHONY: import_csv
+import_csv:
+	@echo "Importing csv..."
+	sh scripts/import_csv.sh
+
 .PHONY: test
 test:
 	@echo "Testing..."
